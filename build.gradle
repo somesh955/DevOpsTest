@@ -36,7 +36,13 @@ apply plugin : "java"
 //apply plugin : "application"
 
 //mainClassName= "com.capgemini"
-
+repositories
+{
+   maven
+   {
+      url "http://10.109.32.183:8081/nexus/content/groups/public"
+   }
+}
 
 dependencies {testCompile "junit:junit:4.12"}
 dependencies { testCompile "org.mockito:mockito-core:2.+" }
