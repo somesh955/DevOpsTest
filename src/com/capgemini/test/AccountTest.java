@@ -78,13 +78,18 @@ public class AccountTest {
 	 * 2.when the valid account number is passed withdrawal should be successfully
 	 */
 	@Test(expected=com.capgemini.exceptions.InvalidAccountNumberException.class)
-	public void whenInvalidAccountNumberIsPassedShouldThrowInvalidAccountNumberExceptionWhileWithdrawal() throws InvalidAccountNumberException, InsufficientBalanceException {		
+	public void whenInvalidAccountNumberIsPassedShouldThrowInvalidAccountNumberExceptionWhileWithdrawal() throws InvalidAccountNumberException, InsufficientBalanceException {
+		Account account =new Account();
+		account.setAccountNumber(101);
+		account.setAmount(5000);
+		when(accountRepository.searchAccount(101)).thenReturn(account);
 		accountService.withdrawalAmount(100, 15000);
 	}
 	
 	@Test(expected=com.capgemini.exceptions.InsufficientBalanceException.class)
 	public void whenInvalidAmountIsPassedShouldThrowInsufficientBalanceException() throws InvalidAccountNumberException,InsufficientBalanceException, InsufficientInitialAmountException {
 		Account account =new Account();
+		account.setAccountNumber(101);
 		account.setAmount(5000);
 		when(accountRepository.searchAccount(101)).thenReturn(account);
 		accountService.withdrawalAmount(101, 15000);
@@ -93,6 +98,7 @@ public class AccountTest {
 	@Test
 	public void whenValidAccountNumberIsPassedWithdrawalShoudBeSuccessfull() throws InvalidAccountNumberException, InsufficientBalanceException  {
 		Account account =new Account();
+		account.setAccountNumber(101);
 		account.setAmount(5000);
 		when(accountRepository.searchAccount(101)).thenReturn(account);
 		assertEquals(4000, accountService.withdrawalAmount(101, 1000));
